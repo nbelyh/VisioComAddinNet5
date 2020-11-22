@@ -14,6 +14,8 @@ Changes include:
 - allow com hosting
 - Fix the method that reads bitmaps from resources
 - Replacing PIA references with COM references
+- Fix the installer to use AppId
+- Fix the installer to use self-registration
 ```
   <PropertyGroup>
     <TargetFramework>net5.0-windows</TargetFramework>
