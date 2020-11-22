@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Wix Project template to install Visio components -->
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+	xmlns:visio="http://schemas.microsoft.com/wix/Visio" >
+
+  <?define Version="1.0.0.0"?>
+  <?define ProductCode = "{1ddb9b0c-3e8e-4baf-b928-412de4037880}" ?>
+  <?define UpgradeCode = "{a5f8934b-7ef8-4196-baa1-269b7768f1f4}" ?>
+
+  <Product Id="$(var.ProductCode)" Name="VisioComAddinNet5" Language="1033" Version="$(var.Version)" Manufacturer="nbelyh" UpgradeCode="$(var.UpgradeCode)">
+    <Package InstallerVersion="200" Compressed="yes" />
+
+    <!-- allow major upgrades -->
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <Property Id="MSIFASTINSTALL" Value="7" />
+
+    <MediaTemplate EmbedCab="yes" />
+
+    <Feature Id="ProductFeature" Title="Setup" Level="1">
+      <ComponentGroupRef Id="AddinFiles"/>
+    </Feature>
+
+    <!-- UI settings -->
+    <UI>
+
+      <UIRef Id="WixUI_Advanced"/>
+      <Property Id="ALLUSERS" Value="2" />
+      <Property Id="ApplicationFolderName" Value="VisioComAddinNet5" />
+      <Property Id="WixAppFolder" Value="WixPerMachineFolder" />
+
+      <Publish Dialog="InstallScopeDlg" Control="Next" Property="MSIINSTALLPERUSER" Value="1" >WixAppFolder = "WixPerUserFolder"</Publish>
+      <Publish Dialog="InstallScopeDlg" Control="Next" Property="MSIINSTALLPERUSER" Value="{}" >WixAppFolder = "WixPerMachineFolder"</Publish>
+    </UI>
+
+  </Product>
+
+  <!-- Define default directory structure -->
+
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="APPLICATIONFOLDER" Name="VisioComAddinNet5">
+        </Directory>
+      </Directory>
+    </Directory>
+
+
+    <!-- Addin files to be included in setup -->
+    <ComponentGroup Id="AddinFiles" Directory="APPLICATIONFOLDER" Source="$(var.VisioComAddinNet5.TargetDir)">
+
+      <Component>
+        <RegistryKey Root="HKLM" Key="SOFTWARE\Microsoft\Visio\Addins\VisioComAddinNet5.Addin">
+          <RegistryValue Name="CommandLineSafe" Type="integer" Value="1" />
+          <RegistryValue Name="Description" Type="string" Value="VisioComAddinNet5.Addin Description" />
+          <RegistryValue Name="FriendlyName" Type="string" Value="VisioComAddinNet5.Addin FriendlyName" />
+          <RegistryValue Name="LoadBehavior" Type="integer" Value="3" />
+        </RegistryKey>
+      </Component>
+      
+      <!-- Add the addin dll to the setup. Reference using project referencing -->
+      <Component>
+        <File Name="VisioComAddinNet5.dll" />
+      </Component>
+      <Component>
+        <File Name="VisioComAddinNet5.comhost.dll" SelfRegCost="1" />
+      </Component>
+      <Component>
+        <File Name="VisioComAddinNet5.deps.json" />
+      </Component>
+      <Component>
+        <File Name="VisioComAddinNet5.runtimeconfig.json" />
+      </Component>
+
+    </ComponentGroup>
+
+  </Fragment>
+</Wix>
