@@ -1,11 +1,12 @@
 # VisioComAddinNet5
 Visio Addin based on .NET 5 (core) "Hello World" example. Adds a two buttons to the ribbon.
-Basically the same as the starter project created by my main extension, but for .NET 5 (core)
+Basically the same as the starter project created by my main extension, but for .NET 5 (core).
+
+Created as proof of concept, to implement support for .NET5 in the [main project](https://github.com/nbelyh/VisioPanelAddinVSTO) in the future.
 
 ![](https://i.paste.pics/944464cd1fc1a9999dfcc8912c9920a0.png)
 
 The base wizard for the "normal" .NET:
-
 https://marketplace.visualstudio.com/items?itemName=NikolayBelyh.ExtendedVisioAddinProject
 
 Changes include:
